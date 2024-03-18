@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\AntreanModel;
 use App\Models\UserModel;
+use CodeIgniter\I18n\Time;
 
 class AdminController extends BaseController
 {
@@ -19,7 +21,7 @@ class AdminController extends BaseController
         return view('admin/kelola-dosen', $data);
     }
 
-    public function storeDataDosen()
+    public function addDosen()
     {
         $validationRules = [
             'username' => 'required|is_unique[users.username]',
@@ -51,11 +53,11 @@ class AdminController extends BaseController
         $userModel = new UserModel();
         $user = $userModel->getUserById($id);
 
-        if($user && $user['role_id'] == 2){
+        if ($user && $user['role_id'] == 2) {
             $userModel->deleteUser($id);
-            return redirect()->back()->with('success', 'Berhasil Menghapus Data Dosen');
+            return redirect('kelola_dosen')->back()->with('success', 'Berhasil Menghapus Data Dosen');
         } else {
-            return redirect()->back()->withInput()->with('errors', 'Data yang dihapus bukan data dosen');
+            return redirect('kelola_dosen')->back()->withInput()->with('errors', 'Data yang dihapus bukan data dosen');
         }
     }
 
@@ -69,8 +71,8 @@ class AdminController extends BaseController
             'title' => 'Edit Data Dosen'
         ];
 
-        if(!$user){
-            return redirect()->back()->with('errors', "Data Dosen tidak ditemukan");
+        if (!$user) {
+            return redirect('kelola_dosen')->back()->with('errors', "Data Dosen tidak ditemukan");
         }
 
         return view('admin/edit-dosen', $data);
@@ -89,21 +91,71 @@ class AdminController extends BaseController
 
         $user = $userModel->getUserById($id);
 
-        if(!$user && $user['role_id'] != 2) {
-            return redirect()->back()->with('errors', 'Data yang diupdate bukan data dosen');
+        if (!$user && $user['role_id'] != 2) {
+            return redirect('kelola_dosen')->back()->with('errors', 'Data yang diupdate bukan data dosen');
         }
 
         $userModel->updateUser($id, $data);
-        return redirect()->back()->with('success', 'Data Berhasil Diperbaharui');
+        return redirect('kelola_dosen')->back()->with('success', 'Data Berhasil Diperbaharui');
     }
 
     // Antrean
     public function indexAntrean()
     {
+        $model = new UserModel();
+        $antreModel = new AntreanModel();
+        $jakartaTime = Time::now('Asia/Jakarta');
+        $date = $jakartaTime->format('Y-m-d');
+
+        $antreans = $antreModel
+        ->select('antrean.*, users.nama as dosen_nama')
+        ->join('users', 'antrean.dosen_id = users.id')
+        ->paginate(10);
+
         $data = [
-            'title' => 'Kelola Antrean'
+            'title' => 'Kelola Antrean',
+            'dosen' => $model->getUsersByRole(2),
+            'antre' => $antreans,
+            'pager' => $antreModel->pager,
+            'tanggal' => $date
         ];
 
         return view('admin/kelola-antrean', $data);
     }
+
+    public function addAntrean()
+    {
+        $antreanModel = new AntreanModel();
+        $userModel    = new UserModel();
+
+        $data = [
+            'dosen_id' => $this->request->getVar('optionDosen'),
+            'tanggal'  => $this->request->getVar('date'),
+        ];
+
+        $antreanId = $antreanModel->createAntrean($data);
+        $userId = $this->request->getVar('optionDosen');
+
+        $userModel->update($userId, ['antrean_id' => $antreanId]);
+
+        return redirect('kelola_antrean')->back()->with('success', 'Berhasil Menambahkan Data');
+    }
+
+    public function deleteAntrean($id)
+    {
+        $userModel    = new UserModel();
+        $antreanModel = new AntreanModel();
+
+        $antre = $antreanModel->find($id);
+
+        if(!$antre){
+            return redirect('kelola_antrean')->back()->with('errors', 'Data Antrean Tidak Ada');
+        }
+
+        $userModel->where('antrean_id', $id)->set('antrean_id', NULL)->update();
+        $antreanModel->deleteAntrean($id);
+
+        return redirect('kelola_antrean')->back()->with('success', 'Berhasil Menghapus Data Antrean');
+    }
+
 }

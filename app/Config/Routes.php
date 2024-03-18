@@ -11,5 +11,7 @@ $routes->get('/kelola_dosen', 'AdminController::index');
 $routes->get('/kelola_antrean', 'AdminController::indexAntrean');
 $routes->get('/kelola_dosen/edit/(:num)', 'AdminController::editDosen/$1');
 $routes->get('/delete_dosen/(:num)', 'AdminController::deleteDosen/$1');
-$routes->post('/tambah_dosen', 'AdminController::storeDataDosen');
+$routes->post('/tambah_dosen', 'AdminController::addDosen');
 $routes->post('/kelola_dosen/update/(:num)', 'AdminController::updateDosen/$1');
+$routes->post('/tambah_antrean', 'AdminController::addAntrean');
+$routes->get('/delete_antrean/(:num)', 'AdminController::deleteAntrean/$1');

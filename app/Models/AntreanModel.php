@@ -6,13 +6,13 @@ use CodeIgniter\Model;
 
 class AntreanModel extends Model
 {
-    protected $table            = 'antreans';
+    protected $table            = 'antrean';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['dosen_id', 'tanggal', 'keterangan', 'jumlah_antrean'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -39,4 +39,20 @@ class AntreanModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function createAntrean($data)
+    {
+        return $this->insert($data);
+    }
+
+    public function deleteAntrean($id)
+    {
+        return $this->delete($id);
+    }
+
+    public function editAntrean($id, $data)
+    {
+        return $this->update($id, $data);
+    }
+
 }
