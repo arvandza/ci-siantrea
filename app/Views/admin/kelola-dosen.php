@@ -4,6 +4,20 @@
 <?= $this->include('layout/header') ?>
 <?= $this->include('layout/sidebar') ?>
 
+<style>
+    /* Disable submit button by default */
+    #buttonSave:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* Enable submit button when both fields are filled */
+    #formModal input:valid ~ #buttonSave {
+        opacity: 1;
+        cursor: pointer;
+    }
+</style>
+
 <body>
     <div id="app">
         <div class="main-wrapper">
@@ -89,7 +103,7 @@
         </div>
         <div class="modal fade" tabindex="-1" role="dialog" id="dosenModal">
             <div class="modal-dialog" role="document">
-                <form action="<?= site_url('tambah_dosen') ?>" method="post" class="needs-validation" novalidate="">
+                <form action="<?= site_url('tambah_dosen') ?>" method="post" class="needs-validation" novalidate="" id="formModal">
                     <div class="modal-content ">
                         <div class="modal-header">
                             <h5 class="modal-title">Tambah Data Dosen</h5>
@@ -130,7 +144,7 @@
                         </div>
                         <div class="modal-footer bg-whitesmoke br">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary" id="buttonSave">Simpan</button>
                         </div>
                     </div>
                 </form>

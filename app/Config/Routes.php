@@ -15,3 +15,5 @@ $routes->post('/tambah_dosen', 'AdminController::addDosen');
 $routes->post('/kelola_dosen/update/(:num)', 'AdminController::updateDosen/$1');
 $routes->post('/tambah_antrean', 'AdminController::addAntrean');
 $routes->get('/delete_antrean/(:num)', 'AdminController::deleteAntrean/$1');
+$routes->get('/kelola_antrean/edit/(:num)', 'AdminController::editAntrean/$1');
+$routes->post('/kelola_antrean/update/(:num)', 'AdminController::updateAntrean/$1');

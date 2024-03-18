@@ -63,7 +63,7 @@
                           <td> <?= $value['jumlah_antrean'] ?> </td>
                           <td>
                             <div class="d-flex justify-content-center">
-                              <a href="" class="btn btn-icon btn-info mr-2"><i class="far fa-edit"></i></a>
+                              <a href="<?= site_url('kelola_antrean/edit/' . $value['id']) ?>" class="btn btn-icon btn-info mr-2"><i class="far fa-edit"></i></a>
                               <a href="" class="btn btn-icon btn-danger" data-confirm="Yakin?|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = '<?= site_url('delete_antrean/' . $value['id']) ?>';"><i class="fas fa-trash"></i></a>
                             </div>
                           </td>
@@ -86,6 +86,7 @@
           </div>
         </section>
       </div>
+      <!-- Modal Create Antrean -->
       <div class="modal fade" tabindex="-1" role="dialog" id="antreanModal">
         <div class="modal-dialog" role="document">
           <form action="<?= site_url('tambah_antrean') ?>" method="post" class="needs-validation" novalidate="">
@@ -100,12 +101,13 @@
                 <?= csrf_field() ?>
                 <div class="form-group">
                   <label for="nama">Nama Dosen</label>
-                  <?php foreach ($dosen as $dosen => $value) : ?>
-                    <select id="inputState" class="form-control" name="optionDosen">
-                      <option selected>-- Pilih Dosen --</option>
+
+                  <select id="inputState" class="form-control" name="optionDosen">
+                    <option selected>-- Pilih Dosen --</option>
+                    <?php foreach ($dosen as $dosen => $value) : ?>
                       <option value="<?= $value['id'] ?>"><?php echo $value['nama'] ?></option>
-                    </select>
-                  <?php endforeach; ?>
+                    <?php endforeach; ?>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="date">Tanggal</label>

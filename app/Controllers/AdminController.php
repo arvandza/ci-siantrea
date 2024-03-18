@@ -108,9 +108,9 @@ class AdminController extends BaseController
         $date = $jakartaTime->format('Y-m-d');
 
         $antreans = $antreModel
-        ->select('antrean.*, users.nama as dosen_nama')
-        ->join('users', 'antrean.dosen_id = users.id')
-        ->paginate(10);
+            ->select('antrean.*, users.nama as dosen_nama')
+            ->join('users', 'antrean.dosen_id = users.id')
+            ->paginate(10);
 
         $data = [
             'title' => 'Kelola Antrean',
@@ -148,7 +148,7 @@ class AdminController extends BaseController
 
         $antre = $antreanModel->find($id);
 
-        if(!$antre){
+        if (!$antre) {
             return redirect('kelola_antrean')->back()->with('errors', 'Data Antrean Tidak Ada');
         }
 
@@ -158,4 +158,53 @@ class AdminController extends BaseController
         return redirect('kelola_antrean')->back()->with('success', 'Berhasil Menghapus Data Antrean');
     }
 
+    public function editAntrean($id)
+    {
+        $antreModel = new AntreanModel();
+        $antre = $antreModel->find($id);
+        $jakartaTime = Time::now('Asia/Jakarta');
+        $date = $jakartaTime->format('Y-m-d');
+
+        $antreans = $antreModel
+            ->select('antrean.*, users.nama as dosen_nama')
+            ->join('users', 'antrean.dosen_id = users.id')
+            ->where('antrean.id', $id)
+            ->first();
+
+        $data = [
+            'antre' => $antre,
+            'title' => 'Edit Data Dosen',
+            'dosen' => $antreans,
+            'tanggal' => $date
+        ];
+
+        if (!$antre) {
+            return redirect('kelola_antrean')->back()->with('errors', "Data Dosen tidak ditemukan");
+        }
+
+        return view('admin/edit-antrean', $data);
+    }
+
+    public function updateAntrean($id)
+    {
+        $antreanModel = new AntreanModel();
+
+        $antre = $antreanModel->find($id);
+
+        if (!$antre) {
+            return redirect('kelola_antrean')->back()->with('errors', 'Data Antrean Tidak Ditemukan');
+        }
+
+        $data = [
+            'tanggal'  => $this->request->getVar('date'),
+        ];
+
+        if (!$antre) {
+            return redirect('kelola_antrean')->back()->with('errors', "Data Dosen tidak ditemukan");
+        }
+
+        $antreanModel->editAntrean($id, $data);
+
+        return redirect('kelola_antrean')->back()->with('success', "Data Berhasil Diperbaharui");
+    }
 }
