@@ -32,7 +32,7 @@ class AdminController extends BaseController
         ];
 
         if ($this->validate($validationRules)) {
-            $userModel = new UserModel();
+        
             $data = [
                 'username' => $this->request->getPost('username'),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
@@ -41,7 +41,7 @@ class AdminController extends BaseController
                 'prodi'    => $this->request->getPost('prodi'),
                 'role_id'  => 2
             ];
-            $userModel->createUser($data);
+            $this->userModel->createUser($data);
             return redirect()->back()->withInput()->with('success', 'Berhasil Menambahkan Data');
         } else {
             return redirect()->back()->withInput()->with('errors', 'Kesalahan dalam Inputan');
@@ -50,11 +50,10 @@ class AdminController extends BaseController
 
     public function deleteDosen($id)
     {
-        $userModel = new UserModel();
-        $user = $userModel->getUserById($id);
+        $user = $this->userModel->getUserById($id);
 
         if ($user && $user['role_id'] == 2) {
-            $userModel->deleteUser($id);
+            $this->userModel->deleteUser($id);
             return redirect('kelola_dosen')->back()->with('success', 'Berhasil Menghapus Data Dosen');
         } else {
             return redirect('kelola_dosen')->back()->withInput()->with('errors', 'Data yang dihapus bukan data dosen');
@@ -63,8 +62,7 @@ class AdminController extends BaseController
 
     public function editDosen($id)
     {
-        $userModel = new UserModel();
-        $user = $userModel->getUserById($id);
+        $user = $this->userModel->getUserById($id);
 
         $data = [
             'user' => $user,
@@ -80,7 +78,6 @@ class AdminController extends BaseController
 
     public function updateDosen($id)
     {
-        $userModel = new UserModel();
         $data = [
             'username' => $this->request->getPost('username'),
             'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
@@ -89,34 +86,32 @@ class AdminController extends BaseController
             'prodi'    => $this->request->getPost('prodi'),
         ];
 
-        $user = $userModel->getUserById($id);
+        $user = $this->userModel->getUserById($id);
 
         if (!$user && $user['role_id'] != 2) {
             return redirect('kelola_dosen')->back()->with('errors', 'Data yang diupdate bukan data dosen');
         }
 
-        $userModel->updateUser($id, $data);
+        $this->userModel->updateUser($id, $data);
         return redirect('kelola_dosen')->back()->with('success', 'Data Berhasil Diperbaharui');
     }
 
     // Antrean
     public function indexAntrean()
     {
-        $model = new UserModel();
-        $antreModel = new AntreanModel();
         $jakartaTime = Time::now('Asia/Jakarta');
         $date = $jakartaTime->format('Y-m-d');
 
-        $antreans = $antreModel
+        $antreans = $this->antreanModel
             ->select('antrean.*, users.nama as dosen_nama')
             ->join('users', 'antrean.dosen_id = users.id')
             ->paginate(10);
 
         $data = [
             'title' => 'Kelola Antrean',
-            'dosen' => $model->getUsersByRole(2),
+            'dosen' => $this->userModel->getUsersByRole(2),
             'antre' => $antreans,
-            'pager' => $antreModel->pager,
+            'pager' => $this->antreanModel->pager,
             'tanggal' => $date
         ];
 
@@ -125,47 +120,40 @@ class AdminController extends BaseController
 
     public function addAntrean()
     {
-        $antreanModel = new AntreanModel();
-        $userModel    = new UserModel();
-
         $data = [
             'dosen_id' => $this->request->getVar('optionDosen'),
             'tanggal'  => $this->request->getVar('date'),
         ];
 
-        $antreanId = $antreanModel->createAntrean($data);
+        $antreanId = $this->antreanModel->createAntrean($data);
         $userId = $this->request->getVar('optionDosen');
 
-        $userModel->update($userId, ['antrean_id' => $antreanId]);
+        $this->userModel->update($userId, ['antrean_id' => $antreanId]);
 
         return redirect('kelola_antrean')->back()->with('success', 'Berhasil Menambahkan Data');
     }
 
     public function deleteAntrean($id)
     {
-        $userModel    = new UserModel();
-        $antreanModel = new AntreanModel();
-
-        $antre = $antreanModel->find($id);
+        $antre = $this->antreanModel->find($id);
 
         if (!$antre) {
             return redirect('kelola_antrean')->back()->with('errors', 'Data Antrean Tidak Ada');
         }
 
-        $userModel->where('antrean_id', $id)->set('antrean_id', NULL)->update();
-        $antreanModel->deleteAntrean($id);
+        $this->userModel->where('antrean_id', $id)->set('antrean_id', NULL)->update();
+        $this->antreanModel->deleteAntrean($id);
 
         return redirect('kelola_antrean')->back()->with('success', 'Berhasil Menghapus Data Antrean');
     }
 
     public function editAntrean($id)
     {
-        $antreModel = new AntreanModel();
-        $antre = $antreModel->find($id);
+        $antre = $this->antreanModel->find($id);
         $jakartaTime = Time::now('Asia/Jakarta');
         $date = $jakartaTime->format('Y-m-d');
 
-        $antreans = $antreModel
+        $antreans = $this->antreanModel
             ->select('antrean.*, users.nama as dosen_nama')
             ->join('users', 'antrean.dosen_id = users.id')
             ->where('antrean.id', $id)
@@ -187,9 +175,7 @@ class AdminController extends BaseController
 
     public function updateAntrean($id)
     {
-        $antreanModel = new AntreanModel();
-
-        $antre = $antreanModel->find($id);
+        $antre = $this->antreanModel->find($id);
 
         if (!$antre) {
             return redirect('kelola_antrean')->back()->with('errors', 'Data Antrean Tidak Ditemukan');
@@ -203,7 +189,7 @@ class AdminController extends BaseController
             return redirect('kelola_antrean')->back()->with('errors', "Data Dosen tidak ditemukan");
         }
 
-        $antreanModel->editAntrean($id, $data);
+        $this->antreanModel->editAntrean($id, $data);
 
         return redirect('kelola_antrean')->back()->with('success', "Data Berhasil Diperbaharui");
     }

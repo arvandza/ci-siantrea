@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\AntreanModel;
+use App\Models\UserModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -37,6 +39,8 @@ abstract class BaseController extends Controller
      */
     protected $helpers = ['form', 'url'];
     protected $validation;
+    protected $antreanModel;
+    protected $userModel;
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
@@ -56,5 +60,7 @@ abstract class BaseController extends Controller
 
         // E.g.: $this->session = \Config\Services::session();
         $this->validation = \Config\Services::validation();
+        $this->antreanModel = new AntreanModel();
+        $this->userModel = new UserModel();
     }
 }
