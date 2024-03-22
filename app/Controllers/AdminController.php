@@ -3,9 +3,9 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\AntreanModel;
 use App\Models\UserModel;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class AdminController extends BaseController
 {
@@ -56,12 +56,13 @@ class AdminController extends BaseController
             $this->userModel->deleteUser($id);
             return redirect('kelola_dosen')->back()->with('success', 'Berhasil Menghapus Data Dosen');
         } else {
-            return redirect('kelola_dosen')->back()->withInput()->with('errors', 'Data yang dihapus bukan data dosen');
+            throw new PageNotFoundException();
         }
     }
 
-    public function editDosen($id)
+    public function editDosen()
     {
+        $id = $this->request->getGet('id');
         $user = $this->userModel->getUserById($id);
 
         $data = [
@@ -70,7 +71,7 @@ class AdminController extends BaseController
         ];
 
         if (!$user) {
-            return redirect('kelola_dosen')->back()->with('errors', "Data Dosen tidak ditemukan");
+            throw new PageNotFoundException();
         }
 
         return view('admin/edit-dosen', $data);
@@ -89,7 +90,7 @@ class AdminController extends BaseController
         $user = $this->userModel->getUserById($id);
 
         if (!$user && $user['role_id'] != 2) {
-            return redirect('kelola_dosen')->back()->with('errors', 'Data yang diupdate bukan data dosen');
+            throw new PageNotFoundException();
         }
 
         $this->userModel->updateUser($id, $data);
@@ -138,7 +139,7 @@ class AdminController extends BaseController
         $antre = $this->antreanModel->find($id);
 
         if (!$antre) {
-            return redirect('kelola_antrean')->back()->with('errors', 'Data Antrean Tidak Ada');
+            throw new PageNotFoundException();
         }
 
         $this->userModel->where('antrean_id', $id)->set('antrean_id', NULL)->update();
@@ -167,7 +168,7 @@ class AdminController extends BaseController
         ];
 
         if (!$antre) {
-            return redirect('kelola_antrean')->back()->with('errors', "Data Dosen tidak ditemukan");
+            throw new PageNotFoundException();
         }
 
         return view('admin/edit-antrean', $data);
@@ -176,17 +177,12 @@ class AdminController extends BaseController
     public function updateAntrean($id)
     {
         $antre = $this->antreanModel->find($id);
-
-        if (!$antre) {
-            return redirect('kelola_antrean')->back()->with('errors', 'Data Antrean Tidak Ditemukan');
-        }
-
         $data = [
             'tanggal'  => $this->request->getVar('date'),
         ];
 
         if (!$antre) {
-            return redirect('kelola_antrean')->back()->with('errors', "Data Dosen tidak ditemukan");
+            throw new PageNotFoundException();
         }
 
         $this->antreanModel->editAntrean($id, $data);

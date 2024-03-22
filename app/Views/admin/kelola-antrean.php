@@ -50,7 +50,7 @@
                         <th>No</th>
                         <th>Nama Dosen</th>
                         <th>Tanggal</th>
-                        <th>Jumlah Antrean</th>
+                        <th>Maks Antrean</th>
                         <th>
                           <div class="d-flex justify-content-center">Action</div>
                         </th>
@@ -60,7 +60,7 @@
                           <td> <?= $antre + 1 ?> </td>
                           <td> <?= $value['dosen_nama'] ?> </td>
                           <td> <?= $value['tanggal'] ?> </td>
-                          <td> <?= $value['jumlah_antrean'] ?> </td>
+                          <td> <?= $value['maks_antrean'] ?> </td>
                           <td>
                             <div class="d-flex justify-content-center">
                               <a href="<?= site_url('kelola_antrean/edit/' . $value['id']) ?>" class="btn btn-icon btn-info mr-2"><i class="far fa-edit"></i></a>
@@ -112,6 +112,10 @@
                 <div class="form-group">
                   <label for="date">Tanggal</label>
                   <input type="date" class="form-control" value="<?php echo $tanggal ?>" name="date">
+                </div>
+                <div class="form-group">
+                  <label for="antrean">Jumlah Maks Antrean</label>
+                  <input type="number" min="0" onpaste="return false;" oninput="this.value = Math.abs(this.value)" class="form-control" value="0" name="antrean">
                 </div>
               </div>
               <div class="modal-footer bg-whitesmoke br">

@@ -12,7 +12,7 @@ class AntreanModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['dosen_id', 'tanggal', 'keterangan', 'jumlah_antrean'];
+    protected $allowedFields    = ['dosen_id', 'tanggal', 'keterangan', 'jumlah_antrean', 'maks_antrean'];
 
     protected bool $allowEmptyInserts = false;
 

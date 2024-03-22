@@ -42,7 +42,7 @@
                     <h4>Total Antrean</h4>
                   </div>
                   <div class="card-body">
-                    <?php echo $total_antrean ?>
+                  <?php echo ($total_antrean == null) ? '0' : $total_antrean; ?>
                   </div>
                 </div>
               </div>

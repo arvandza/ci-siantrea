@@ -12,7 +12,7 @@
     }
 
     /* Enable submit button when both fields are filled */
-    #formModal input:valid ~ #buttonSave {
+    #formModal input:valid~#buttonSave {
         opacity: 1;
         cursor: pointer;
     }
@@ -76,7 +76,7 @@
                                                     <td> <?= $value['prodi'] ?> </td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
-                                                            <a href="<?= site_url('kelola_dosen/edit/' . $value['id']) ?>" class="btn btn-icon btn-info mr-2"><i class="far fa-edit"></i></a>
+                                                            <a href="<?= site_url('kelola_dosen/edit?id=' . $value['id']) ?>" class="btn btn-icon btn-info mr-2"><i class="far fa-edit"></i></a>
                                                             <a href="<?= site_url('delete_dosen/' . $value['id']) ?>" class="btn btn-icon btn-danger" data-confirm="Yakin?|Apakah anda benar ingin menghapus data ini?" data-confirm-yes="window.location.href = '<?= site_url('delete_dosen/' . $value['id']) ?>';"><i class="fas fa-trash"></i></a>
                                                         </div>
                                                     </td>

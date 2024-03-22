@@ -42,6 +42,7 @@ abstract class BaseController extends Controller
     protected $antreanModel;
     protected $userModel;
 
+
     /**
      * Be sure to declare properties for any property fetch you initialized.
      * The creation of dynamic property is deprecated in PHP 8.2.
