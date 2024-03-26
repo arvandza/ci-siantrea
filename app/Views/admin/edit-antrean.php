@@ -37,6 +37,10 @@
                                             <label for="date">Tanggal</label>
                                             <input type="date" class="form-control" value="<?php echo $tanggal ?>" name="date">
                                         </div>
+                                        <div class="form-group">
+                                            <label for="antrean">Jumlah Maks Antrean</label>
+                                            <input type="number" min="0" onpaste="return false;" oninput="this.value = Math.abs(this.value)" class="form-control" value="<?= $dosen['maks_antrean'] ?>" name="antrean">
+                                        </div>
                                     </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Submit</button>

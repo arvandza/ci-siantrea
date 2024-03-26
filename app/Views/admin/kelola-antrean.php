@@ -63,7 +63,7 @@
                           <td> <?= $value['maks_antrean'] ?> </td>
                           <td>
                             <div class="d-flex justify-content-center">
-                              <a href="<?= site_url('kelola_antrean/edit/' . $value['id']) ?>" class="btn btn-icon btn-info mr-2"><i class="far fa-edit"></i></a>
+                              <a href="<?= site_url('kelola_antrean/edit?id=' . $value['id']) ?>" class="btn btn-icon btn-info mr-2"><i class="far fa-edit"></i></a>
                               <a href="" class="btn btn-icon btn-danger" data-confirm="Yakin?|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = '<?= site_url('delete_antrean/' . $value['id']) ?>';"><i class="fas fa-trash"></i></a>
                             </div>
                           </td>

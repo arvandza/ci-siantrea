@@ -124,6 +124,7 @@ class AdminController extends BaseController
         $data = [
             'dosen_id' => $this->request->getVar('optionDosen'),
             'tanggal'  => $this->request->getVar('date'),
+            'maks_antrean' => $this->request->getVar('antrean')
         ];
 
         $antreanId = $this->antreanModel->createAntrean($data);
@@ -148,8 +149,9 @@ class AdminController extends BaseController
         return redirect('kelola_antrean')->back()->with('success', 'Berhasil Menghapus Data Antrean');
     }
 
-    public function editAntrean($id)
+    public function editAntrean()
     {
+        $id = $this->request->getGet('id');
         $antre = $this->antreanModel->find($id);
         $jakartaTime = Time::now('Asia/Jakarta');
         $date = $jakartaTime->format('Y-m-d');
@@ -179,6 +181,7 @@ class AdminController extends BaseController
         $antre = $this->antreanModel->find($id);
         $data = [
             'tanggal'  => $this->request->getVar('date'),
+            'maks_antrean' => $this->request->getVar('antrean')
         ];
 
         if (!$antre) {
