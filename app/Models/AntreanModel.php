@@ -55,4 +55,9 @@ class AntreanModel extends Model
         return $this->update($id, $data);
     }
 
+    public function getAntreanByUserId($id)
+    {
+        return $this->where('dosen_id', $id)->paginate(5);
+    }
+
 }

@@ -42,6 +42,7 @@ abstract class BaseController extends Controller
     protected $antreanModel;
     protected $userModel;
 
+    protected $session;
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
@@ -63,5 +64,6 @@ abstract class BaseController extends Controller
         $this->validation = \Config\Services::validation();
         $this->antreanModel = new AntreanModel();
         $this->userModel = new UserModel();
+        $this->session = \Config\Services::session();
     }
 }

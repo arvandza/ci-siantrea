@@ -11,6 +11,17 @@ class AdminController extends BaseController
 {
     public function index()
     {
+        $data = [
+            'title' => 'Dashboard',
+            'total_dosen' => $this->userModel->getTotal(2),
+            'total_admin' => $this->userModel->getTotal(1),
+            'total_antrean' => $this->antreanModel->query("SELECT SUM(jumlah_antrean) as total FROM antrean")->getRow()->total
+        ];
+        return view('admin/dashboard', $data);
+    }
+
+    public function indexDosen()
+    {
         $model = new UserModel();
         $data = [
             'dosen' => $model->getUsersByRole(2),
@@ -164,7 +175,7 @@ class AdminController extends BaseController
 
         $data = [
             'antre' => $antre,
-            'title' => 'Edit Data Dosen',
+            'title' => 'Edit Data Antrean',
             'dosen' => $antreans,
             'tanggal' => $date
         ];

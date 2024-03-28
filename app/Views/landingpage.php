@@ -171,12 +171,15 @@
                                 <tr>
                                     <td> <?= $antre + 1 ?> </td>
                                     <td> <?= $value['dosen_nama'] ?> </td>
-                                    <td> <?= $value['tanggal'] ?> </td>
+                                    <td> <?= date('d-m-Y', strtotime($value['tanggal'])) ?> </td>
                                     <td> <?= $value['jumlah_antrean'] ?> </td>
                                     <td> <?= $value['maks_antrean'] ?> </td>
-                                    <td> <?= $value['keterangan'] ?> </td>
+                                    <td> <?= $value['keterangan'] ?? "-" ?> </td>
                                     <td>
                                         <div class="d-flex justify-content-center">
+                                            <?php if ($value['jumlah_antrean'] == $value['maks_antrean']) : ?>
+                                                Antrean Penuh
+                                            <?php endif; ?>
                                             <a href="" class="btn btn-icon btn-info mr-2" style="background-color: #0d6efd; border-radius: 100%"><i class="fas fa-plus" style="color: white;"></i></a>
                                         </div>
                                     </td>

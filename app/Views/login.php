@@ -4,6 +4,21 @@
 <?= $this->include('layout/header') ?>
 
 <body>
+    <style>
+        @keyframes fadeIn {
+            from {
+                transform: translateY(-80%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .alert {
+            animation: fadeIn 0.8s ease;
+        }
+    </style>
     <div id="app">
         <section class="section">
             <div class="container mt-5">
@@ -16,7 +31,7 @@
                                     <button class="close" data-dismiss="alert">
                                         <span>&times;</span>
                                     </button>
-                                    <?= session('errors')?>
+                                    <?= session('errors') ?>
                                 </div>
                             </div>
                         <?php endif; ?>

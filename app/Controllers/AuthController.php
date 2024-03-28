@@ -13,6 +13,14 @@ class AuthController extends BaseController
             'title' => 'Login'
         ];
 
+        if(session()->get('is_logged_in')) {
+            if(session()->get('roles') == 'admin'){
+                return redirect()->to('/dashboard');
+            } else {
+                return redirect()->to('/dosen/dashboard');
+            }
+        }
+
         return view('login', $data);
     }
 
@@ -21,11 +29,17 @@ class AuthController extends BaseController
         $username = $this->request->getPost('username');
         $password = $this->request->getVar('password');
 
-        $user = $this->userModel->where('username', $username)->first();
+        $user = $this->userModel
+            ->where('username', $username)
+            ->first();
 
-        if($user && password_verify($password, $user['password'])) {
+        if ($user && password_verify($password, $user['password'])) {
             $this->setUserSession($user);
-            return redirect()->to('/dashboard');
+            if(session()->get('roles') == 'admin'){
+                return redirect()->to('/dashboard');
+            } else {
+                return redirect()->to('/dosen/dashboard');
+            }
         } else {
             session()->setFlashdata('errors', 'Invalid username or password');
             return redirect()->back()->withInput();
@@ -38,9 +52,16 @@ class AuthController extends BaseController
             'id'    => $user['id'],
             'nama'  => $user['nama'],
             'username' => $user['username'],
-            'is_logged_in' => TRUE
+            'is_logged_in' => TRUE,
+            'roles' => ($user['role_id'] == 1) ? 'admin' : 'dosen'
         ];
 
         session()->set($data);
+    }
+
+    public function logout()
+    {
+        $this->session->destroy();
+        return redirect()->to('/');
     }
 }
