@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\AntreanModel;
+use App\Models\DataAntreModel;
 use App\Models\UserModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
@@ -41,6 +42,7 @@ abstract class BaseController extends Controller
     protected $validation;
     protected $antreanModel;
     protected $userModel;
+    protected $dataModel;
 
     protected $session;
 
@@ -63,6 +65,7 @@ abstract class BaseController extends Controller
         // E.g.: $this->session = \Config\Services::session();
         $this->validation = \Config\Services::validation();
         $this->antreanModel = new AntreanModel();
+        $this->dataModel = new DataAntreModel();
         $this->userModel = new UserModel();
         $this->session = \Config\Services::session();
     }

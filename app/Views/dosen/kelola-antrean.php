@@ -15,10 +15,7 @@
                     <div class="section-header">
                         <h1>Kelola Antrean</h1>
                     </div>
-                    <div class="d-flex justify-content-end">
-                        <a href="#" class="btn btn-icon icon-left btn-primary mb-3" data-toggle="modal" data-target="#antreanModal"><i class="fas fa-user-clock"></i> Tambah
-                            Antrean</a>
-                    </div>
+                   
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
 
@@ -52,6 +49,7 @@
                                                 <th>Tanggal</th>
                                                 <th>Jumlah Antrean</th>
                                                 <th>Maks Antrean</th>
+                                                <th>Keterangan</th>
                                                 <th>
                                                     <div class="d-flex justify-content-center">Action</div>
                                                 </th>
@@ -63,6 +61,7 @@
                                                     <td> <?= date('d-m-Y', strtotime($value['tanggal'])) ?> </td>
                                                     <td> <?= $value['jumlah_antrean'] ?> </td>
                                                     <td> <?= $value['maks_antrean'] ?> </td>
+                                                    <td> <?= $value['keterangan'] ?> </td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
                                                             <a href="<?= site_url('dosen/kelola_antrean/edit?id=' . $value['id']) ?>" class="btn btn-icon btn-info mr-2"><i class="far fa-edit"></i></a>

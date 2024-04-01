@@ -32,6 +32,10 @@
                 <li class="nav-item dropdown">
                     <a href="<?= site_url('dosen/kelola_antrean') ?>" class="nav-link"><i class="fas fa-users"></i><span>Kelola Antrean</span></a>
                 </li>
+                <li class="menu-header">Data</li>
+                <li class="nav-item dropdown">
+                    <a href="<?= site_url('dosen/kelola_antrean') ?>" class="nav-link"><i class="fas fa-user-clock"></i><span>Antrean</span></a>
+                </li>
             <?php endif; ?>
         </ul>
 

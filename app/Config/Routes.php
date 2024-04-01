@@ -27,6 +27,7 @@ $routes->group('dosen', ['filter' => 'role:dosen'], function($routes){
     $routes->get('dashboard', 'DosenController::index');
     $routes->get('kelola_antrean', 'DosenController::indexAntrean');
     $routes->get('kelola_antrean/edit', 'DosenController::editAntrean');
+    $routes->post('kelola_antrean/update/(:num)', 'DosenController::updateAntrean/$1');
 });
 
 $routes->group('', function ($routes) {
@@ -34,6 +35,9 @@ $routes->group('', function ($routes) {
     $routes->get('/logout', 'AuthController::logout');
     $routes->post('/auth', 'AuthController::auth');
 });
+
+$routes->get('ambil_antrean', 'DosenController::indexData');
+$routes->post('ambil_antrean/save', 'DosenController::storeDataAntrean');
 
 
 // errors

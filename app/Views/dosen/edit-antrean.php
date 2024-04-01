@@ -28,6 +28,10 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
+                                            <label for="keterangan">Keterangan</label>
+                                            <input type="text" class="form-control" name="keterangan">
+                                        </div>
+                                        <div class="form-group">
                                             <label for="date">Tanggal</label>
                                             <input type="date" class="form-control" value="<?php echo $tanggal ?>" name="date">
                                         </div>

@@ -179,8 +179,12 @@
                                         <div class="d-flex justify-content-center">
                                             <?php if ($value['jumlah_antrean'] == $value['maks_antrean']) : ?>
                                                 Antrean Penuh
+                                            <?php else : ?>
+                                                <form method="POST" action="/ambil_antrean/save" onsubmit="return confirm('Apakah Anda yakin ingin mengambil antrean?');">
+                                                    <input type="hidden" name="id_dosen" value="<?= $value['id'] ?>">
+                                                    <button type="submit" class="btn btn-icon btn-info mr-2" style="background-color: #0d6efd; border-radius: 100%"><i class="fas fa-plus" style="color: white;"></i></button>
+                                                </form>
                                             <?php endif; ?>
-                                            <a href="" class="btn btn-icon btn-info mr-2" style="background-color: #0d6efd; border-radius: 100%"><i class="fas fa-plus" style="color: white;"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -305,7 +309,7 @@
                             <div class="copyright-content">
                                 <p class="text">
                                     Designed and Developed by
-                                    <a href="https://uideck.com" rel="nofollow">UIdeck</a>
+                                    <a href="https://dotsnusa.com" rel="nofollow" target="_blank">Connecting Dots Nusa</a>
                                 </p>
                             </div>
                             <!-- copyright content -->

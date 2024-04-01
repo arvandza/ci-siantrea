@@ -37,6 +37,9 @@
                         <?php endif; ?>
                         <div class="card card-primary">
                             <div class="card-header">
+                                <div class="row mr-1">
+                                    <a href="#" onclick="history.back();" class="nav-link nav-link-lg"><i class="fas fa-arrow-left"></i></a>
+                                </div>
                                 <h4>Login</h4>
                             </div>
                             <div class="card-body">
