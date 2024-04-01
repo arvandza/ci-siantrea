@@ -19,7 +19,8 @@ class DosenController extends BaseController
             'antre' => $this->dataModel->getAntreanByUserId($userId),
             'current_antre' => $antre['current_antre'],
             'next_antre'    => $antre['current_antre'] + 1,
-            'total_antre'   => $this->dataModel->countAntreanByUserId($userId)
+            'total_antre'   => $this->dataModel->countAntreanByUserId($userId),
+            'sisa_antre'    => $antre['jumlah_antrean'] - $antre['current_antre']
         ];
 
         return view('dosen/dashboard', $data);
@@ -86,9 +87,9 @@ class DosenController extends BaseController
     {
         $kode_verif = session()->get('kode_verif');
 
-        if (!$kode_verif) {
-            throw new PageNotFoundException();
-        }
+        // if (!$kode_verif) {
+        //     throw new PageNotFoundException();
+        // }
 
         return view('user/ambil-antrean');
     }
@@ -163,5 +164,12 @@ class DosenController extends BaseController
             ->update();
 
         return redirect()->to('/dosen/dashboard')->with('success', 'Berhasil Melakukan Reset pada Antrean');
+    }
+
+    public function getQueueData()
+    {
+        $antrean = $this->antreanModel->findAll(); // Fetch all antrean data
+        // Return the data in JSON format
+        return $this->response->setJSON($antrean);
     }
 }

@@ -180,7 +180,7 @@
                                             <?php if ($value['jumlah_antrean'] == $value['maks_antrean']) : ?>
                                                 Antrean Penuh
                                             <?php else : ?>
-                                                <form method="POST" action="/ambil_antrean/save" onsubmit="return confirm('Apakah Anda yakin ingin mengambil antrean?');">
+                                                <form method="POST" action="<?=base_url()?>/ambil_antrean/save" onsubmit="return confirm('Apakah Anda yakin ingin mengambil antrean?');">
                                                     <input type="hidden" name="id_dosen" value="<?= $value['id'] ?>">
                                                     <button type="submit" class="btn btn-icon btn-info mr-2" style="background-color: #0d6efd; border-radius: 100%"><i class="fas fa-plus" style="color: white;"></i></button>
                                                 </form>

@@ -68,10 +68,10 @@
                                 </div>
                                 <div class="card-wrap">
                                     <div class="card-header">
-                                        <h4>Total Log</h4>
+                                        <h4>Sisa Antrean</h4>
                                     </div>
                                     <div class="card-body">
-                                        47
+                                        <?php echo $sisa_antre ?>
                                     </div>
                                 </div>
                             </div>

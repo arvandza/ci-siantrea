@@ -22,4 +22,20 @@ class Home extends BaseController
 
         return view('landingpage', $data);
     }
+
+    public function monitorAntrean()
+    {
+        $antreans = $this->antreanModel
+            ->select('antrean.*, users.nama as dosen_nama')
+            ->join('users', 'antrean.dosen_id = users.id')
+            ->get()
+            ->getResultArray();
+
+        $data = [
+            'antre' => $antreans
+        ];
+
+        return view('user/monitor-antrean', $data);
+    }
+
 }

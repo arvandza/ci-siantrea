@@ -39,6 +39,8 @@ $routes->group('', function ($routes) {
 });
 
 $routes->get('ambil_antrean', 'DosenController::indexData');
+$routes->get('monitor_antrean', 'Home::monitorAntrean');
+$routes->get('getqueue', 'DosenController::getQueueData');
 $routes->post('ambil_antrean/save', 'DosenController::storeDataAntrean');
 
 

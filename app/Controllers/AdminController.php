@@ -135,7 +135,8 @@ class AdminController extends BaseController
         $data = [
             'dosen_id' => $this->request->getVar('optionDosen'),
             'tanggal'  => $this->request->getVar('date'),
-            'maks_antrean' => $this->request->getVar('antrean')
+            'maks_antrean' => $this->request->getVar('antrean'),
+            'current_antre' => 0
         ];
 
         $antreanId = $this->antreanModel->createAntrean($data);
