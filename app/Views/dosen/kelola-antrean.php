@@ -15,7 +15,10 @@
                     <div class="section-header">
                         <h1>Kelola Antrean</h1>
                     </div>
-                   
+                    <div class="d-flex justify-content-end">
+                        <a href="#" class="btn btn-icon icon-left btn-primary mb-3" data-toggle="modal" data-target="#antreanModal"><i class="fas fa-user-clock"></i> Tambah
+                            Antrean</a>
+                    </div>
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
 

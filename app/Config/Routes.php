@@ -28,6 +28,8 @@ $routes->group('dosen', ['filter' => 'role:dosen'], function($routes){
     $routes->get('kelola_antrean', 'DosenController::indexAntrean');
     $routes->get('kelola_antrean/edit', 'DosenController::editAntrean');
     $routes->post('kelola_antrean/update/(:num)', 'DosenController::updateAntrean/$1');
+    $routes->get('next_queue', 'DosenController::nextAntrean');
+    $routes->get('reset_queue', 'DosenController::resetAntrean');
 });
 
 $routes->group('', function ($routes) {

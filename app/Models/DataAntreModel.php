@@ -41,4 +41,37 @@ class DataAntreModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getAntreanByUserId($id)
+    {
+        return $this->db->table('data_antrean')
+            ->select('data_antrean.*')
+            ->join('antrean', 'data_antrean.antrean_id = antrean.id')
+            ->where('antrean.dosen_id', $id)
+            ->get()
+            ->getResultArray();
+    }
+
+    public function countAntreanByUserId($id)
+    {
+        return $this->db->table('data_antrean')
+            ->select('data_antrean.*')
+            ->join('antrean', 'data_antrean.antrean_id = antrean.id')
+            ->where('antrean.dosen_id', $id)
+            ->countAllResults();
+    }
+
+    public function resetQueue($id)
+    {
+        $antrean_id = $this->db->table('antrean')
+            ->select('id')
+            ->where('dosen_id', $id)
+            ->get()
+            ->getRow()->id;
+
+        // Delete rows from data_antrean based on antrean_id
+        return $this->db->table('data_antrean')
+            ->where('antrean_id', $antrean_id)
+            ->delete();
+    }
 }

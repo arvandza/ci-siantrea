@@ -12,7 +12,7 @@ class AntreanModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['dosen_id', 'tanggal', 'keterangan', 'jumlah_antrean', 'maks_antrean'];
+    protected $allowedFields    = ['dosen_id', 'tanggal', 'keterangan', 'jumlah_antrean', 'maks_antrean', 'current_antre'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -60,4 +60,25 @@ class AntreanModel extends Model
         return $this->where('dosen_id', $id)->paginate(5);
     }
 
+    public function updateQueue($id)
+    {
+        $antrean = $this->where('dosen_id', $id)->first();
+
+        if (!$antrean) {
+            return false;
+        }
+
+        $current_antre = $antrean['current_antre'] + 1;
+
+        $data = [
+            'current_antre' => $current_antre
+        ];
+
+        try{
+            $this->where('dosen_id', $id)->update($data);
+            return true;
+        } catch(\Exception $e){
+            return false;
+        }
+    }
 }

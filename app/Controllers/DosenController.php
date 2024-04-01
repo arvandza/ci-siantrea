@@ -11,8 +11,15 @@ class DosenController extends BaseController
 {
     public function index()
     {
+        $userId = $this->session->get('id');
+        $antre = $this->antreanModel->where('dosen_id', $userId)->first();
+
         $data = [
-            'title' => 'Dashboard Dosen'
+            'title' => 'Dashboard Dosen',
+            'antre' => $this->dataModel->getAntreanByUserId($userId),
+            'current_antre' => $antre['current_antre'],
+            'next_antre'    => $antre['current_antre'] + 1,
+            'total_antre'   => $this->dataModel->countAntreanByUserId($userId)
         ];
 
         return view('dosen/dashboard', $data);
@@ -78,11 +85,11 @@ class DosenController extends BaseController
     public function indexData()
     {
         $kode_verif = session()->get('kode_verif');
-        
-        // if(!$kode_verif){
-        //     throw new PageNotFoundException();
-        // }
-        
+
+        if (!$kode_verif) {
+            throw new PageNotFoundException();
+        }
+
         return view('user/ambil-antrean');
     }
 
@@ -119,5 +126,42 @@ class DosenController extends BaseController
         session()->setFlashdata('nama_dosen', $dosenName['dosen_nama']);
 
         return redirect()->to('/ambil_antrean');
+    }
+
+    public function nextAntrean()
+    {
+        $userId = $this->session->get('id');
+
+        $antrean = $this->antreanModel->where('dosen_id', $userId)->first();
+        $dataAntre = $this->dataModel->getAntreanByUserId($userId);
+
+        if ($antrean && $dataAntre) {
+            $current_antre = $antrean['current_antre'] + 1;
+
+            $this->antreanModel
+                ->where('dosen_id', $antrean['dosen_id'])
+                ->set('current_antre', $current_antre)
+                ->update();
+
+            $successMessage = "Antrean " . $current_antre . " berhasil dipanggil";
+
+            return redirect()->to('/dosen/dashboard')->with('success', $successMessage);
+        } else {
+            return redirect()->to('/dosen/dashboard')->with('errors', "Tidak ada data antrean");
+        }
+    }
+
+    public function resetAntrean()
+    {
+        $userId = $this->session->get('id');
+
+        $this->dataModel->resetQueue($userId);
+
+        $this->antreanModel
+            ->set(['current_antre' => 0, 'jumlah_antrean' => 0])
+            ->where('dosen_id', $userId)
+            ->update();
+
+        return redirect()->to('/dosen/dashboard')->with('success', 'Berhasil Melakukan Reset pada Antrean');
     }
 }
