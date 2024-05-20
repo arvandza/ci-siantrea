@@ -14,13 +14,30 @@ class DosenController extends BaseController
         $userId = $this->session->get('id');
         $antre = $this->antreanModel->where('dosen_id', $userId)->first();
 
+        if ($antre !== null) {
+            $currentAntre = $antre['current_antre'];
+            $jumlahAntre = $antre['jumlah_antrean'];
+        } else {
+            $currentAntre = 0;
+            $jumlahAntre = 0;
+        }
+
+        // $data = [
+        //     'title' => 'Dashboard Dosen',
+        //     'antre' => $this->dataModel->getAntreanByUserId($userId),
+        //     'current_antre' => $antre['current_antre'],
+        //     'next_antre'    => $antre['current_antre'] + 1,
+        //     'total_antre'   => $this->dataModel->countAntreanByUserId($userId),
+        //     'sisa_antre'    => $antre['jumlah_antrean'] - $antre['current_antre']
+        // ];
+
         $data = [
             'title' => 'Dashboard Dosen',
             'antre' => $this->dataModel->getAntreanByUserId($userId),
-            'current_antre' => $antre['current_antre'],
-            'next_antre'    => $antre['current_antre'] + 1,
+            'current_antre' => $currentAntre,
+            'next_antre'    => $currentAntre + 1,
             'total_antre'   => $this->dataModel->countAntreanByUserId($userId),
-            'sisa_antre'    => $antre['jumlah_antrean'] - $antre['current_antre']
+            'sisa_antre'    => $jumlahAntre - $currentAntre
         ];
 
         return view('dosen/dashboard', $data);
@@ -73,6 +90,7 @@ class DosenController extends BaseController
             'maks_antrean' => $this->request->getVar('antrean'),
             'keterangan'   => $this->request->getVar('keterangan')
         ];
+
 
         if (!$antre || $antre['dosen_id'] != $this->session->get('id')) {
             throw new PageNotFoundException();

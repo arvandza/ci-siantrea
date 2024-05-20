@@ -15,9 +15,18 @@ class AdminController extends BaseController
             'title' => 'Dashboard',
             'total_dosen' => $this->userModel->getTotal(2),
             'total_admin' => $this->userModel->getTotal(1),
-            'total_antrean' => $this->antreanModel->query("SELECT SUM(jumlah_antrean) as total FROM antrean")->getRow()->total
+            'total_antrean' => $this->antreanModel->query("SELECT SUM(jumlah_antrean) as total FROM antrean")->getRow()->total,
         ];
         return view('admin/dashboard', $data);
+    }
+    
+    public function indexProfil()
+    {
+        $data = [
+            'title' => 'Profil',
+            
+        ];
+        return view('admin/Profil', $data);
     }
 
     public function indexDosen()
@@ -43,14 +52,14 @@ class AdminController extends BaseController
         ];
 
         if ($this->validate($validationRules)) {
-        
+
             $data = [
                 'username' => $this->request->getPost('username'),
-                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-                'nama'     => $this->request->getPost('nama'),
-                'email'    => $this->request->getPost('email'),
-                'prodi'    => $this->request->getPost('prodi'),
-                'role_id'  => 2
+                'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
+                'nama' => $this->request->getPost('nama'),
+                'email' => $this->request->getPost('email'),
+                'prodi' => $this->request->getPost('prodi'),
+                'role_id' => 2
             ];
             $this->userModel->createUser($data);
             return redirect()->back()->withInput()->with('success', 'Berhasil Menambahkan Data');
@@ -90,22 +99,25 @@ class AdminController extends BaseController
 
     public function updateDosen($id)
     {
+        $passw = $this->request->getVar('password');
         $data = [
             'username' => $this->request->getPost('username'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-            'nama'     => $this->request->getPost('nama'),
-            'email'    => $this->request->getPost('email'),
-            'prodi'    => $this->request->getPost('prodi'),
+            'password' => password_hash($passw, PASSWORD_DEFAULT),
+            'nama' => $this->request->getPost('nama'),
+            'email' => $this->request->getPost('email'),
+            'prodi' => $this->request->getPost('prodi'),
         ];
 
         $user = $this->userModel->getUserById($id);
 
-        if (!$user && $user['role_id'] != 2) {
+        if ($user && $user['role_id'] == 2) {
+            $this->userModel->updateUser($id, $data);
+            return redirect()->to('/kelola_dosen')->with('success', 'Data Berhasil Diperbaharui');
+        } else {
             throw new PageNotFoundException();
         }
-
-        $this->userModel->updateUser($id, $data);
-        return redirect('kelola_dosen')->back()->with('success', 'Data Berhasil Diperbaharui');
+        // $this->userModel->updateUser($id, $data);
+        // return redirect('kelola_dosen')->back()->with('success', 'Data Berhasil Diperbaharui');
     }
 
     // Antrean
@@ -134,7 +146,7 @@ class AdminController extends BaseController
     {
         $data = [
             'dosen_id' => $this->request->getVar('optionDosen'),
-            'tanggal'  => $this->request->getVar('date'),
+            'tanggal' => $this->request->getVar('date'),
             'maks_antrean' => $this->request->getVar('antrean'),
             'current_antre' => 0
         ];
@@ -192,7 +204,7 @@ class AdminController extends BaseController
     {
         $antre = $this->antreanModel->find($id);
         $data = [
-            'tanggal'  => $this->request->getVar('date'),
+            'tanggal' => $this->request->getVar('date'),
             'maks_antrean' => $this->request->getVar('antrean')
         ];
 

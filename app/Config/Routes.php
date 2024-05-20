@@ -11,6 +11,7 @@ $routes->get('/', 'Home::index');
 
 $routes->group('', ['filter' => 'role:admin'], function ($routes) {
     $routes->get('/dashboard', 'AdminController::index');
+    $routes->get('/profil', 'AdminController::indexProfil');
     $routes->get('/kelola_dosen', 'AdminController::indexDosen');
     $routes->get('/kelola_antrean', 'AdminController::indexAntrean');
     $routes->get('/kelola_dosen/edit', 'AdminController::editDosen');
@@ -35,6 +36,7 @@ $routes->group('dosen', ['filter' => 'role:dosen'], function($routes){
 $routes->group('', function ($routes) {
     $routes->get('/login', 'AuthController::index');
     $routes->get('/logout', 'AuthController::logout');
+    $routes->get('/register', 'AuthController::registrasi');
     $routes->post('/auth', 'AuthController::auth');
 });
 

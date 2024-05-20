@@ -69,6 +69,7 @@ class DataAntreModel extends Model
             ->get()
             ->getRow()->id;
 
+
         // Delete rows from data_antrean based on antrean_id
         return $this->db->table('data_antrean')
             ->where('antrean_id', $antrean_id)

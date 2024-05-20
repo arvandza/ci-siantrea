@@ -15,7 +15,7 @@ class Home extends BaseController
             ->paginate(10);
 
         $data = [
-            'title' => 'SIANTREA',
+            'title' => 'SIANTREUM',
             'antre' => $antreans,
             'pager' => $this->antreanModel->pager,
         ];

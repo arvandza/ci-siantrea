@@ -5,6 +5,7 @@ namespace Config;
 use CodeIgniter\Config\View as BaseView;
 use CodeIgniter\View\ViewDecoratorInterface;
 
+
 /**
  * @phpstan-type ParserCallable (callable(mixed): mixed)
  * @phpstan-type ParserCallableString (callable(mixed): mixed)&string
@@ -18,7 +19,7 @@ class View extends BaseView
      * to each view. You might prefer to have the data stick around between
      * calls so that it is available to all views. If that is the case,
      * set $saveData to true.
-     *
+     * 
      * @var bool
      */
     public $saveData = true;

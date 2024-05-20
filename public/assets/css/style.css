@@ -169,8 +169,8 @@ p {
 
 /*===== All Section Title Style =====*/
 .section-title .line {
-  background: -webkit-gradient(linear, left top, left bottom, from(#fe8464), to(#fe6e9a));
-  background: linear-gradient(#fe8464 0%, #fe6e9a 100%);
+  background: -webkit-gradient(linear, left top, left bottom, from(#33c8c1), to(#119bd2));
+  background: linear-gradient(#33c8c1 0%, #119bd2 100%);
   width: 150px;
   height: 5px;
   margin-bottom: 10px !important;
@@ -587,7 +587,7 @@ p {
 }
 
 .navbar-nav .nav-item a:hover, .navbar-nav .nav-item a.active {
-  color: #fe7a7b;
+  color: #92d5ff;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
@@ -602,8 +602,8 @@ p {
 
 .navbar-btn .main-btn {
   line-height: 45px;
-  background: -webkit-gradient(linear, left top, right top, from(#fe8464), color-stop(50%, #fe6e9a), to(#fe8464));
-  background: linear-gradient(to right, #fe8464 0%, #fe6e9a 50%, #fe8464 100%);
+  background: -webkit-gradient(linear, left top, right top, from(#4fbcff), color-stop(50%, #92d5ff), to(#4fbcff));
+  background: linear-gradient(to right, #4fbcff 0%, #92d5ff 50%, #4fbcff 100%);
   background-size: 200%;
 }
 
@@ -621,7 +621,7 @@ p {
 }
 
 .sticky .navbar-nav .nav-item a.active, .sticky .navbar-nav .nav-item a:hover {
-  color: #fe7a7b;
+  color: #92d5ff;
 }
 
 /*===== HEADER HERO =====*/
@@ -1407,8 +1407,8 @@ p {
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: -webkit-gradient(linear, left top, right top, from(#fe8464), color-stop(50%, #fe6e9a), to(#fe8464));
-  background: linear-gradient(to right, #fe8464 0%, #fe6e9a 50%, #fe8464 100%);
+  background: -webkit-gradient(linear, left top, right top, from(#33c8c1), color-stop(50%, #119bd2), to(#33c8c1));
+  background: linear-gradient(to right, #33c8c1 0%, #119bd2 50%, #33c8c1 100%);
   background-size: 200%;
   text-align: center;
   z-index: 99;
@@ -1431,6 +1431,10 @@ p {
 /* ======================
     DEFAULT CSS
 ========================= */
+.mt-1 {
+  margin-top: 1px;
+}
+
 .mt-5 {
   margin-top: 5px;
 }
@@ -1968,6 +1972,18 @@ p {
 }
 
 .pt-225 {
+  padding-top: 225px;
+}
+
+.pt-230 {
+  padding-top: 225px;
+}
+
+.pt-235 {
+  padding-top: 225px;
+}
+
+.pt-240 {
   padding-top: 225px;
 }
 
